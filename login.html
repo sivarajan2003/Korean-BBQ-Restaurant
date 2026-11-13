@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="light scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | SEOUL BBQ — Welcome Back</title>
+
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            seoul: {
+              blue: '#1E3A8A',
+              light: '#3B82F6'
+            },
+            bbq: {
+              ember: '#D92D20',
+              hover: '#B91C1C',
+              light: '#FEF2F2'
+            },
+            base: {
+              light: '#FDFBF7',
+              surface: '#F3EFE6',
+              dark: '#0C0A09',
+              card: '#1C1917'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .transition-theme {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+
+    /* Toggle buttons */
+    .toggle-btn {
+      transition: all 0.3s ease;
+    }
+    .toggle-btn:hover {
+      border-color: #D92D20;
+      color: #D92D20;
+    }
+
+    /* Card entrance animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+      animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Floating label inputs */
+    .input-group {
+      position: relative;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 1.1rem 1rem 0.4rem 2.8rem;
+      border-radius: 0.75rem;
+      border: 1px solid #E7E5E4;
+      background: #FDFBF7;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #1C1917;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+    .dark .input-group input {
+      background: #0C0A09;
+      border-color: #292524;
+      color: #FAFAF9;
+    }
+    .input-group input:focus {
+      border-color: #D92D20;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(217, 45, 32, 0.1);
+    }
+    .dark .input-group input:focus {
+      background: #0C0A09;
+      box-shadow: 0 0 0 4px rgba(217, 45, 32, 0.2);
+    }
+    .input-group label {
+      position: absolute;
+      left: 2.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #A8A29E;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: 0.5rem;
+      transform: translateY(0);
+      font-size: 0.65rem;
+      color: #D92D20;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    [dir="rtl"] .input-group input { padding: 1.1rem 2.8rem 0.4rem 1rem; }
+    [dir="rtl"] .input-group label { left: auto; right: 2.8rem; }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #D92D20;
+      font-size: 1rem;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+    [dir="rtl"] .input-icon { left: auto; right: 1rem; }
+  </style>
+</head>
+
+<body class="bg-base-light dark:bg-base-dark text-zinc-800 dark:text-zinc-200 transition-theme min-h-screen flex flex-col relative overflow-y-auto">
+
+  <!-- ============================================================ -->
+  <!-- Fixed Top Right Toggles (RTL + Dark Mode) -->
+  <!-- ============================================================ -->
+  <div class="fixed top-5 right-5 z-[100] flex items-center gap-2 rtl:left-5 rtl:right-auto">
+    <button id="rtlToggle" class="toggle-btn w-10 h-10 flex items-center justify-center bg-white dark:bg-base-card border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-600 dark:text-zinc-400 shadow-sm" title="Toggle RTL">
+      <i class="fa-solid fa-arrow-right-arrow-left text-sm"></i>
+    </button>
+    <button id="darkToggle" class="toggle-btn w-10 h-10 flex items-center justify-center bg-white dark:bg-base-card border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-600 dark:text-zinc-400 shadow-sm" title="Toggle Theme">
+      <i id="darkIcon" class="fa-solid fa-moon text-sm"></i>
+    </button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- Main Layout: Split Screen -->
+  <!-- ============================================================ -->
+  <div class="flex-1 flex w-full min-h-screen">
+    
+    <!-- Left Side: Image (Hidden on mobile) -->
+    <div class="hidden lg:flex lg:w-1/2 relative bg-zinc-900 items-center justify-center overflow-hidden">
+      <!-- Background Image -->
+      <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1500&auto=format&fit=crop" alt="Korean BBQ" class="absolute inset-0 w-full h-full object-cover opacity-60">
+      <!-- Gradient Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+      
+      <!-- Content over image -->
+      <div class="relative z-10 p-12 lg:p-20 text-white max-w-2xl">
+        <a href="index.html" class="inline-flex items-center gap-2 mb-16 group">
+          <i class="fa-solid fa-fire text-bbq-ember text-3xl group-hover:scale-110 transition-transform"></i>
+          <span class="text-3xl font-serif font-extrabold tracking-tight">
+            <span class="text-blue-400">SEOUL</span> <span class="text-bbq-ember">BBQ</span>
+          </span>
+        </a>
+        
+        <h1 class="text-5xl lg:text-7xl font-serif font-bold leading-[1.1] mb-6">
+          The grill is <br>
+          <span class="italic text-bbq-ember">waiting for you.</span>
+        </h1>
+        <p class="text-lg text-white/70 max-w-md leading-relaxed mb-10">
+          Sign in to manage your reservations, explore our premium cuts, and track your loyalty rewards.
+        </p>
+        
+        <div class="flex items-center gap-4 text-sm font-bold">
+          <div class="flex -space-x-3 rtl:space-x-reverse">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=50&q=80" class="w-10 h-10 rounded-full border-2 border-black" alt="Guest">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=50&q=80" class="w-10 h-10 rounded-full border-2 border-black" alt="Guest">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=50&q=80" class="w-10 h-10 rounded-full border-2 border-black" alt="Guest">
+          </div>
+          <span class="text-white/80">Join 2,000+ happy guests</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side: Login Form -->
+    <div class="w-full lg:w-1/2 flex flex-col items-center justify-center p-6 sm:p-12 relative z-10 py-12">
+      
+      <!-- Background decoration for mobile/light mode -->
+      <div class="absolute inset-0 bg-base-surface dark:bg-base-dark opacity-50 lg:hidden pointer-events-none"></div>
+
+      <div class="w-full max-w-[420px] animate-fade-in-up relative z-20">
+
+        <!-- Mobile Logo (Visible only on small screens) -->
+        <div class="lg:hidden text-center mb-8">
+          <a href="index.html" class="inline-flex items-center gap-2 group">
+            <i class="fa-solid fa-fire text-bbq-ember text-3xl"></i>
+            <span class="text-3xl font-serif font-extrabold tracking-tight">
+              <span class="text-seoul-blue">SEOUL</span> <span class="text-bbq-ember">BBQ</span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Card Container -->
+        <div class="bg-white/90 dark:bg-base-card/90 backdrop-blur-xl rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-2xl p-6 sm:p-8 transition-theme">
+
+          <!-- Header -->
+          <div class="text-center mb-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-bbq-light dark:bg-bbq-ember/10 border border-bbq-ember/20 rounded-full mb-3">
+              <span class="w-1.5 h-1.5 bg-bbq-ember rounded-full animate-pulse"></span>
+              <span class="text-[9px] font-black tracking-widest uppercase text-bbq-ember">Member Access</span>
+            </div>
+            <h2 class="text-2xl font-serif font-bold text-zinc-900 dark:text-white mb-1">
+              Welcome Back
+            </h2>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
+              Sign in to access your guest dashboard.
+            </p>
+          </div>
+
+          <!-- Form -->
+          <form class="space-y-3" onsubmit="event.preventDefault(); window.location.href='guestdash.html';">
+
+            <!-- Email -->
+            <div class="input-group">
+              <i class="fa-solid fa-envelope input-icon"></i>
+              <input type="email" id="email" placeholder=" " required autocomplete="email">
+              <label for="email">Email address</label>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="password" placeholder=" " required autocomplete="current-password">
+              <label for="password">Password</label>
+              <button type="button" id="togglePassword" class="absolute right-3 rtl:left-3 rtl:right-auto top-1/2 -translate-y-1/2 text-zinc-400 hover:text-bbq-ember transition-colors z-10">
+                <i id="togglePasswordIcon" class="fa-solid fa-eye text-xs"></i>
+              </button>
+            </div>
+
+            <!-- Options -->
+            <div class="flex items-center justify-between pt-1">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input type="checkbox" class="w-3.5 h-3.5 rounded border-zinc-300 dark:border-zinc-600 accent-bbq-ember cursor-pointer">
+                <span class="text-[11px] text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors font-semibold">Remember me</span>
+              </label>
+              <a href="#" class="text-[11px] text-bbq-ember font-bold hover:text-bbq-hover transition-colors">Forgot password?</a>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="w-full py-3 mt-1 rounded-xl bg-bbq-ember text-white font-bold text-sm hover:bg-bbq-hover hover:-translate-y-0.5 transition-all duration-300 shadow-lg shadow-bbq-ember/30 flex items-center justify-center gap-2 group">
+              <span>Sign In</span>
+              <i class="fa-solid fa-arrow-right rtl:rotate-180 text-xs transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1"></i>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="relative my-5">
+            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-zinc-200 dark:border-zinc-800"></div></div>
+            <div class="relative flex justify-center"><span class="bg-white dark:bg-base-card px-3 text-[9px] font-bold uppercase tracking-widest text-zinc-400">or continue with</span></div>
+          </div>
+
+          <!-- Social Logins -->
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" class="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white dark:bg-base-dark border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-white font-bold text-xs hover:border-bbq-ember hover:text-bbq-ember transition-all duration-300">
+              <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#EA4335" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#34A853" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+              Google
+            </button>
+            <button type="button" class="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white dark:bg-base-dark border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-white font-bold text-xs hover:border-bbq-ember hover:text-bbq-ember transition-all duration-300">
+              <i class="fa-brands fa-apple text-sm"></i> Apple
+            </button>
+          </div>
+
+          <!-- Signup Link -->
+          <p class="text-center mt-6 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
+            Don't have an account?
+            <a href="signup.html" class="text-bbq-ember font-bold hover:text-bbq-hover transition-colors ml-1">Create one →</a>
+          </p>
+        </div>
+
+        <!-- Trust indicators -->
+        <div class="flex items-center justify-center gap-4 mt-5 text-[10px] text-zinc-400 dark:text-zinc-500 font-semibold">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-bbq-ember"></i> Secure</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-lock text-bbq-ember"></i> Encrypted</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-user-shield text-bbq-ember"></i> Private</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Theme Toggle =====
+    const darkToggle = document.getElementById('darkToggle');
+    const darkIcon = document.getElementById('darkIcon');
+    const rtlToggle = document.getElementById('rtlToggle');
+
+    const updateIcons = (isDark) => {
+      darkIcon.className = isDark ? 'fa-solid fa-sun text-sm text-amber-400' : 'fa-solid fa-moon text-sm';
+    };
+
+    darkToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('seoul-theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('seoul-dark', isDark ? 'true' : 'false');
+      updateIcons(isDark);
+    });
+
+    rtlToggle.addEventListener('click', () => {
+      const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+      document.documentElement.setAttribute('dir', isRtl ? 'ltr' : 'rtl');
+      localStorage.setItem('seoul-rtl', isRtl ? 'ltr' : 'rtl');
+    });
+
+    // Load saved preferences
+    const savedTheme = localStorage.getItem('seoul-theme') || (localStorage.getItem('seoul-dark') === 'true' ? 'dark' : 'light');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      updateIcons(true);
+    }
+    if (localStorage.getItem('seoul-rtl') === 'rtl') {
+      document.documentElement.setAttribute('dir', 'rtl');
+    }
+
+    // ===== Password Visibility Toggle =====
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+    togglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      togglePasswordIcon.className = isPassword ? 'fa-solid fa-eye-slash text-xs' : 'fa-solid fa-eye text-xs';
+    });
+  </script>
+
+</body>
+</html>

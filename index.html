@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>SEOUL BBQ | Premium Korean Grill</title>
+    <script src="tailwind.js"></script>
+    <style>
+        /* --- Premium Palette --- */
+        :root, html[data-theme='light'] {
+            --bg-base: #FDFBF7;
+            --bg-surface: #F3EFE6;
+            --text-main: #1C1917;
+            --text-muted: #78716C;
+            --seoul-blue: #1E3A8A;
+            --bbq-ember: #D92D20;
+            --bbq-ember-hover: #B91C1C;
+            --border-color: #E7E5E4;
+            --card-bg: #FFFFFF;
+        }
+        html[data-theme='dark'] {
+            --bg-base: #0C0A09;
+            --bg-surface: #1C1917;
+            --text-main: #FAFAF9;
+            --text-muted: #A8A29E;
+            --seoul-blue: #3B82F6;
+            --bbq-ember: #EF4444;
+            --bbq-ember-hover: #DC2626;
+            --border-color: #292524;
+            --card-bg: #1C1917;
+        }
+        
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-seoul { color: var(--seoul-blue); }
+        .text-bbq { color: var(--bbq-ember); }
+        .text-main { color: var(--text-main); }
+        .text-muted { color: var(--text-muted); }
+        .bg-base { background-color: var(--bg-base); }
+        .bg-surface { background-color: var(--bg-surface); }
+        .bg-card { background-color: var(--card-bg); }
+        .bg-bbq { background-color: var(--bbq-ember); }
+        .hover\:bg-bbq:hover { background-color: var(--bbq-ember); }
+        .border-brand { border-color: var(--border-color); }
+        
+        .btn-primary {
+            background: var(--bbq-ember);
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-primary:hover {
+            background: var(--bbq-ember-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -8px rgba(217, 45, 32, 0.4);
+        }
+        .btn-outline {
+            border: 1.5px solid var(--text-main);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: var(--text-main);
+            color: var(--bg-base);
+        }
+
+        /* --- Hero Overlay --- */
+        .hero-gradient {
+            background: radial-gradient(circle at center, rgba(12, 10, 9, 0.75) 0%, rgba(12, 10, 9, 0.9) 70%, rgba(12, 10, 9, 0.95) 100%);
+        }
+        html[dir="rtl"] .hero-gradient {
+            background: radial-gradient(circle at center, rgba(12, 10, 9, 0.75) 0%, rgba(12, 10, 9, 0.9) 70%, rgba(12, 10, 9, 0.95) 100%);
+        }
+
+        /* --- Navigation --- */
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--bbq-ember);
+            transition: width 0.3s ease;
+        }
+        html[dir="rtl"] .nav-link::after {
+            left: auto;
+            right: 0;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--bbq-ember) !important;
+        }
+
+        .dropdown-wrapper { position: relative; }
+        .dropdown-menu {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px);
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 0.75rem; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+            min-width: 200px; padding: 0.5rem; z-index: 100;
+            opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dropdown-wrapper:hover .dropdown-menu {
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+        }
+        .dropdown-menu a {
+            display: block; padding: 0.6rem 1rem; border-radius: 0.5rem;
+            color: var(--text-main); font-size: 0.875rem; transition: background 0.2s;
+        }
+        .dropdown-menu a:hover { background: var(--bg-surface); color: var(--bbq-ember); }
+
+        .img-arch { border-radius: 15rem 15rem 0 0; }
+        .img-sticker {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 8px solid var(--card-bg);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        @media (max-width: 1279px) {
+            .dropdown-menu { position: static; transform: none; opacity: 1; visibility: visible; box-shadow: none; border: none; display: none; padding-left: 1rem; }
+            .dropdown-wrapper:hover .dropdown-menu { display: block; }
+            .hero-gradient, html[dir="rtl"] .hero-gradient { background: linear-gradient(to top, rgba(12, 10, 9, 0.95) 0%, rgba(12, 10, 9, 0.7) 100%); }
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <!-- HEADER -->
+    <header class="fixed top-6 left-0 right-0 z-50 transition-all duration-300 mx-auto w-[92%] max-w-[1400px]">
+        <nav class="bg-card border border-brand rounded-full px-6 py-3 flex items-center justify-between shadow-2xl">
+            <a href="index.html" class="text-2xl font-serif font-extrabold flex items-center gap-1 shrink-0 tracking-tight">    
+                <i class="fa-solid fa-fire text-bbq mr-1 rtl:ml-1 rtl:mr-0"></i>
+                <span class="text-seoul">SEOUL</span>
+                <span class="text-bbq">BBQ</span>
+            </a>
+
+            <div class="hidden xl:flex items-center gap-8 rtl:space-x-reverse">
+                <div class="flex items-center gap-6 text-main rtl:space-x-reverse">
+                    <div class="dropdown-wrapper">
+                        <button class="nav-link flex items-center gap-1 active">
+                            Home <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="index.html">Home 1</a>
+                            <a href="home2.html">Home 2</a>
+                        </div>
+                    </div>
+                    <a href="aboutus.html" class="nav-link text-main">About Us</a>
+                    <a href="services.html" class="nav-link text-main">Services</a>
+                    <a href="reservations.html" class="nav-link text-main">Reservations</a>
+                    <a href="contact.html" class="nav-link text-main">Contact</a>
+                    <div class="dropdown-wrapper">
+                        <button class="nav-link text-main flex items-center gap-1">
+                            Dashboard <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="admin.html">Admin Portal</a>
+                            <a href="guestdash.html">Guest Portal</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 rtl:space-x-reverse">
+                <button id="rtl-toggle" class="hidden xl:flex w-10 h-10 rounded-full items-center justify-center text-main hover:text-bbq transition-colors border border-brand bg-surface" title="Toggle RTL">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
+                </button>
+                <button id="theme-toggle" class="hidden xl:flex w-10 h-10 rounded-full items-center justify-center text-main hover:text-bbq transition-colors border border-brand bg-surface">
+                    <svg class="w-4 h-4 light-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="w-4 h-4 dark-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                <a href="login.html" class="hidden xl:block text-sm font-bold text-main hover:text-bbq transition-colors px-2">Log in</a>
+                <a href="reservations.html" class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold hidden xl:block">Book a Table</a>
+                <button id="mobile-menu-open" class="xl:hidden w-10 h-10 flex items-center justify-center text-main border border-brand rounded-full bg-surface">
+                    <i class="fa-solid fa-bars text-sm"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow">
+        <!-- SECTION 1: HERO -->
+        <section class="relative min-h-[100svh] flex items-center pt-24 pb-12 overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="assets/hbg2.png" alt="Korean BBQ Grill" class="w-full h-full object-cover object-center lg:object-[center_30%]">
+                <div class="absolute inset-0 hero-gradient"></div>
+            </div>
+
+            <div class="relative z-10 w-[92%] max-w-[900px] mx-auto flex flex-col items-center text-center">
+                <div class="w-full space-y-8 mt-12 lg:mt-0 flex flex-col items-center">
+                    <div class="inline-flex items-center gap-2 border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full rtl:space-x-reverse">
+                        <span class="w-2 h-2 rounded-full bg-bbq animate-pulse"></span>
+                        <span class="text-white/90 text-xs font-semibold tracking-wider uppercase">Seoul's Finest Table Grill</span>
+                    </div>
+                    
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl text-white leading-[1.1] font-extrabold max-w-3xl">
+                        Ignite Your Senses with <br>
+                        <span class="text-bbq italic font-medium">Authentic</span> BBQ.
+                    </h1>
+                    
+                    <p class="text-white/70 text-lg sm:text-xl max-w-2xl leading-relaxed font-light mx-auto">
+                        Experience the sizzle of premium marinated cuts, the aroma of charcoal, and the vibrant energy of Korean dining right at your table.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center rtl:space-x-reverse">
+                        <a href="reservations.html" class="btn-primary px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-3">
+                            Reserve a Table <i class="fa-solid fa-arrow-right rtl:rotate-180"></i>
+                        </a>
+                        <a href="services.html" class="px-8 py-4 rounded-full font-bold text-lg text-white border border-white/30 hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
+                            Explore Menu
+                        </a>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-6 pt-6 border-t border-white/10 w-full max-w-sm">
+                        <div class="flex items-center gap-3 rtl:space-x-reverse">
+                            <div class="flex -space-x-3 rtl:space-x-reverse">
+                                <img class="w-10 h-10 rounded-full border-2 border-black object-cover" src="assets/p4.avif" alt="Guest">
+                                <img class="w-10 h-10 rounded-full border-2 border-black object-cover" src="assets/a2.avif"alt="Guest">
+                                <div class="w-10 h-10 rounded-full border-2 border-black bg-surface text-main flex items-center justify-center text-xs font-bold">+2k</div>
+                            </div>
+                            <div class="text-sm text-left rtl:text-right">
+                                <p class="text-white font-semibold flex items-center gap-1 rtl:space-x-reverse">4.9 <i class="fa-solid fa-star text-yellow-500 text-xs"></i></p>
+                                <p class="text-white/60">Happy Guests</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE EXPERIENCE -->
+        <section class="py-24 sm:py-32 bg-base relative">
+            <div class="w-[92%] max-w-[1400px] mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="relative h-[400px] sm:h-[500px]">
+                        <img src="assets/ho2.avif" alt="Grilling" class="absolute top-0 left-0 rtl:right-0 rtl:left-auto w-3/4 h-4/5 object-cover img-arch shadow-xl">
+                        <img src="assets/ho3.avif" alt="Sides" class="absolute bottom-0 right-0 rtl:left-0 rtl:right-auto w-1/2 h-1/2 object-cover rounded-2xl img-sticker z-10">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-bbq text-white w-24 h-24 rounded-full flex flex-col items-center justify-center z-20 shadow-xl border-4 border-base">
+                            <span class="text-2xl font-serif font-bold">100%</span>
+                            <span class="text-[10px] uppercase font-bold tracking-wider text-center leading-tight">Fresh<br>Charcoal</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8 lg:pl-10 rtl:lg:pr-10 rtl:lg:pl-0">
+                        <div>
+                            <span class="text-seoul font-bold uppercase tracking-widest text-sm mb-2 block">The SEOUL BBQ Way</span>
+                            <h2 class="text-4xl sm:text-5xl font-bold leading-tight">It's not just a meal.<br>It's a shared <span class="text-bbq italic">experience</span>.</h2>
+                        </div>
+                        
+                        <p class="text-muted text-lg leading-relaxed">
+                            We believe the best conversations happen over a sizzling grill. From the moment you sit down, you take control of the flame. 
+                        </p>
+                        
+                        <div class="space-y-6 pt-4 border-t border-brand">
+                            <div class="flex gap-4 rtl:space-x-reverse">
+                                <div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center shrink-0 text-bbq">
+                                    <i class="fa-solid fa-fire-flame-curved text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Authentic Charcoal</h4>
+                                    <p class="text-muted text-sm mt-1">We use traditional smokeless charcoal to give your meat that perfect, crispy edge.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 rtl:space-x-reverse">
+                                <div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center shrink-0 text-seoul">
+                                    <i class="fa-solid fa-leaf text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Unlimited Banchan</h4>
+                                    <p class="text-muted text-sm mt-1">Kimchi, pickled radish, spinach, and more. Your sides are always bottomless.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 rtl:space-x-reverse">
+                                <div class="w-12 h-12 rounded-full bg-surface flex items-center justify-center shrink-0 text-bbq">
+                                    <i class="fa-solid fa-crown text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Rewarding Loyalty</h4>
+                                    <p class="text-muted text-sm mt-1">Earn points for every dollar you spend and redeem them for premium cuts.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: SIGNATURE CUTS -->
+        <section class="py-24 bg-surface border-y border-brand overflow-hidden">
+            <div class="w-[92%] max-w-[1400px] mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-2">Signature Cuts</h2>
+                        <p class="text-muted">Hand-selected, expertly marbled, and ready for the grill.</p>
+                    </div>
+                    <a href="services.html" class="btn-outline px-6 py-3 rounded-full text-sm font-bold self-start md:self-auto">View Full Menu</a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Card 1 -->
+                    <div class="group bg-card rounded-2xl p-4 border border-brand shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="relative overflow-hidden rounded-xl h-48 mb-4">
+                            <img src="assets/h03.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Samgyeopsal">
+                            <div class="absolute top-2 right-2 rtl:left-2 rtl:right-auto bg-black/70 text-white text-xs font-bold px-2 py-1 rounded backdrop-blur">$28</div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">Samgyeopsal</h3>
+                        <p class="text-xs text-bbq font-bold uppercase tracking-wider mb-3">Pork Belly</p>
+                        <p class="text-sm text-muted line-clamp-2">Thick, juicy cuts of pork belly, grilled until perfectly crispy.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="group bg-card rounded-2xl p-4 border border-brand shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="relative overflow-hidden rounded-xl h-48 mb-4">
+                            <img src="assets/ho4.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Galbi">
+                            <div class="absolute top-2 right-2 rtl:left-2 rtl:right-auto bg-black/70 text-white text-xs font-bold px-2 py-1 rounded backdrop-blur">$35</div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">Galbi</h3>
+                        <p class="text-xs text-bbq font-bold uppercase tracking-wider mb-3">Beef Ribs</p>
+                        <p class="text-sm text-muted line-clamp-2">Sweet and savory marinated short ribs, a Seoul classic.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="group bg-card rounded-2xl p-4 border border-brand shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="relative overflow-hidden rounded-xl h-48 mb-4">
+                            <img src="assets/ho5.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Bulgogi">
+                            <div class="absolute top-2 right-2 rtl:left-2 rtl:right-auto bg-black/70 text-white text-xs font-bold px-2 py-1 rounded backdrop-blur">$30</div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">Bulgogi</h3>
+                        <p class="text-xs text-bbq font-bold uppercase tracking-wider mb-3">Thin Beef</p>
+                        <p class="text-sm text-muted line-clamp-2">Paper-thin slices of beef marinated in our secret sweet soy sauce.</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="group bg-card rounded-2xl p-4 border border-brand shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="relative overflow-hidden rounded-xl h-48 mb-4">
+                            <img src="assets/ho6.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Dakgalbi">
+                            <div class="absolute top-2 right-2 rtl:left-2 rtl:right-auto bg-black/70 text-white text-xs font-bold px-2 py-1 rounded backdrop-blur">$24</div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">Dakgalbi</h3>
+                        <p class="text-xs text-bbq font-bold uppercase tracking-wider mb-3">Spicy Chicken</p>
+                        <p class="text-sm text-muted line-clamp-2">Tender chicken chunks in a fiery, sweet gochujang glaze.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: HOW IT WORKS -->
+        <section class="py-24">
+            <div class="w-[92%] max-w-[1000px] mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-4">Your Table Awaits</h2>
+                <p class="text-muted mb-16">Book in seconds, earn rewards, and enjoy the feast.</p>
+
+                <div class="flex flex-col md:flex-row justify-between relative gap-8">
+                    <div class="hidden md:block absolute top-8 left-[15%] right-[15%] h-[2px] bg-brand z-0"></div>
+
+                    <div class="relative z-10 flex flex-col items-center flex-1">
+                        <div class="w-16 h-16 rounded-full bg-card border-2 border-brand flex items-center justify-center text-xl font-bold mb-4 shadow-sm text-seoul">
+                            1
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Select Date</h4>
+                        <p class="text-sm text-muted">Choose a time that works for you.</p>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center flex-1">
+                        <div class="w-16 h-16 rounded-full bg-card border-2 border-brand flex items-center justify-center text-xl font-bold mb-4 shadow-sm text-bbq">
+                            2
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Pre-order</h4>
+                        <p class="text-sm text-muted">Optional: Select your meats in advance.</p>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center flex-1">
+                        <div class="w-16 h-16 rounded-full bg-card border-2 border-brand flex items-center justify-center text-xl font-bold mb-4 shadow-sm text-seoul">
+                            3
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Arrive & Grill</h4>
+                        <p class="text-sm text-muted">Sit back, turn on the grill, and enjoy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: TESTIMONIALS (FIXED ALIGNMENT) -->
+        <section class="py-24 bg-surface border-y border-brand">
+            <div class="w-[92%] max-w-[1400px] mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-main mb-4">What Our Guests Say</h2>
+                    <p class="text-muted max-w-xl mx-auto">Real experiences from the SEOUL BBQ community.</p>
+                </div>
+
+                <!-- Using standard Grid with stretch to ensure equal height -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                    <!-- Review 1 -->
+                    <div class="bg-card p-8 rounded-2xl border border-brand shadow-sm relative flex flex-col h-full">
+                        <i class="fa-solid fa-quote-right absolute top-6 right-8 rtl:left-8 rtl:right-auto text-4xl text-border opacity-50"></i>
+                        <div class="flex text-yellow-400 mb-6 text-sm gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-main text-lg mb-8 leading-relaxed flex-grow">"The table-side grill experience is unmatched. The meat quality is fantastic, and earning points just by eating makes it even better."</p>
+                        <div class="flex items-center gap-4 border-t border-brand pt-6 mt-auto">
+                            <div class="relative w-12 h-12 rounded-full overflow-hidden bg-seoul shrink-0 flex items-center justify-center">
+                                <span class="absolute text-white font-bold text-lg">JK</span>
+                                <img src="assets/p1.png"  alt="James Kim" class="relative w-full h-full object-cover z-10">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-main">James Kim</h4>
+                                <p class="text-sm text-muted">Loyalty Member</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="bg-card p-8 rounded-2xl border border-brand shadow-sm relative flex flex-col h-full">
+                        <i class="fa-solid fa-quote-right absolute top-6 right-8 rtl:left-8 rtl:right-auto text-4xl text-border opacity-50"></i>
+                        <div class="flex text-yellow-400 mb-6 text-sm gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <p class="text-main text-lg mb-8 leading-relaxed flex-grow">"Booked a table for a birthday. The service was incredible, and the unlimited banchan kept everyone happy. Highly recommend the Galbi."</p>
+                        <div class="flex items-center gap-4 border-t border-brand pt-6 mt-auto">
+                            <div class="relative w-12 h-12 rounded-full overflow-hidden bg-bbq shrink-0 flex items-center justify-center">
+                                <span class="absolute text-white font-bold text-lg">SP</span>
+                                <img src="assets/p2.png"  alt="Sarah Park" class="relative w-full h-full object-cover z-10">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-main">Sarah Park</h4>
+                                <p class="text-sm text-muted">Birthday Celebration</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="bg-card p-8 rounded-2xl border border-brand shadow-sm relative flex flex-col h-full">
+                        <i class="fa-solid fa-quote-right absolute top-6 right-8 rtl:left-8 rtl:right-auto text-4xl text-border opacity-50"></i>
+                        <div class="flex text-yellow-400 mb-6 text-sm gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-main text-lg mb-8 leading-relaxed flex-grow">"Finally, a place that gets Korean BBQ right. The atmosphere is vibrant, the smoke ventilation is great, and the loyalty dashboard is super easy to use."</p>
+                        <div class="flex items-center gap-4 border-t border-brand pt-6 mt-auto">
+                            <div class="relative w-12 h-12 rounded-full overflow-hidden bg-seoul shrink-0 flex items-center justify-center">
+                                <span class="absolute text-white font-bold text-lg">ML</span>
+                                <img src="assets/p4.avif" alt="Mike Lee" class="relative w-full h-full object-cover z-10">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-main">Mike Lee</h4>
+                                <p class="text-sm text-muted">Regular Guest</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: GALLERY -->
+        <section class="py-24 bg-base">
+            <div class="w-[92%] max-w-[1400px] mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-2">The Gallery</h2>
+                        <p class="text-muted">A glimpse into the SEOUL BBQ experience.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="relative group overflow-hidden rounded-2xl h-64">
+                        <img src="assets/g1.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl h-64">
+                        <img src="assets/g2.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl h-64">
+                        <img src="assets/g3.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl h-64">
+                        <img src="assets/g4.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: CTA SECTION -->
+        <section class="py-24 relative overflow-hidden bg-[#1E3A8A]">
+            <div class="absolute inset-0 opacity-10 z-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
+            
+            <div class="relative z-10 w-[92%] max-w-[800px] mx-auto text-center">
+                <i class="fa-solid fa-fire text-bbq text-5xl mb-6"></i>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Ready for the Ultimate Grill Night?</h2>
+                <p class="text-blue-100 text-lg mb-10">Book your table today and join our loyalty program to start earning points immediately.</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 rtl:space-x-reverse">
+                    <a href="reservations.html" class="btn-primary px-8 py-4 rounded-full font-bold text-lg inline-flex items-center justify-center gap-3">
+                        Make a Reservation <i class="fa-solid fa-arrow-right rtl:rotate-180"></i>
+                    </a>
+                    <a href="signup.html" class="bg-transparent border-2 border-white/30 text-white hover:bg-white hover:text-[#1E3A8A] px-8 py-4 rounded-full font-bold text-lg transition-all inline-flex items-center justify-center">
+                        Join Loyalty Program
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0C0A09] text-white pt-20 pb-10 border-t border-white/10">
+        <div class="w-[92%] max-w-[1400px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                
+                <div class="lg:col-span-1">
+                    <a href="index.html" class="text-3xl font-serif font-extrabold flex items-center gap-1 mb-6">    
+                        <i class="fa-solid fa-fire text-bbq mr-1 rtl:ml-1 rtl:mr-0"></i>
+                        <span class="text-white">SEOUL</span>
+                        <span class="text-bbq">BBQ</span>
+                    </a>
+                    <p class="text-white/50 text-sm leading-relaxed mb-8">
+                        Bringing the authentic taste of Seoul to your table. Premium ingredients, interactive grilling, and unforgettable moments.
+                    </p>
+                    <div class="flex gap-4 rtl:space-x-reverse">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-bbq transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-bbq transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-bbq transition-colors"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Explore</h4>
+                    <ul class="space-y-3 text-sm text-white/60">
+                        <li><a href="index.html" class="hover:text-bbq transition-colors">Home</a></li>
+                        <li><a href="aboutus.html" class="hover:text-bbq transition-colors">About Us</a></li>
+                        <li><a href="services.html" class="hover:text-bbq transition-colors">Services</a></li>
+                        <li><a href="reservations.html" class="hover:text-bbq transition-colors">Reservations</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Visit Us</h4>
+                    <ul class="space-y-4 text-sm text-white/60">
+                        <li class="flex items-start gap-3 rtl:space-x-reverse">
+                            <i class="fa-solid fa-location-dot mt-1 text-bbq"></i>
+                            <span>123 Grill Avenue,<br>Seoul District, NY 10001</span>
+                        </li>
+                        <li class="flex items-center gap-3 rtl:space-x-reverse">
+                            <i class="fa-solid fa-phone text-bbq"></i>
+                            <span>+1 (800) 555-0199</span>
+                        </li>
+                        <li class="flex items-center gap-3 rtl:space-x-reverse">
+                            <i class="fa-solid fa-envelope text-bbq"></i>
+                            <span>hello@seoulbbq.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Newsletter</h4>
+                    <p class="text-sm text-white/50 mb-4">Get the latest updates and special offers.</p>
+                    <form class="flex flex-col gap-3">
+                        <input type="email" placeholder="Your email address" class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-bbq text-white placeholder-white/30">
+                        <button type="button" class="bg-white text-black font-bold rounded-xl py-3 text-sm hover:bg-gray-200 transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-xs text-white/40">
+                <p>&copy; 2026 SEOUL BBQ. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0 rtl:space-x-reverse">
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MOBILE MENU DRAWER -->
+    <div id="mobile-menu-drawer" class="fixed inset-0 z-[100] pointer-events-none">
+        <div id="drawer-backdrop" class="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 pointer-events-none backdrop-blur-sm"></div>
+        <div id="drawer-content" class="absolute top-0 right-0 rtl:left-0 rtl:right-auto h-full w-[80%] max-w-sm bg-base shadow-2xl p-6 transform translate-x-full rtl:-translate-x-full transition-transform duration-300 ease-out flex flex-col">
+            
+            <div class="flex justify-between items-center mb-10">
+                <a href="index.html" class="text-2xl font-serif font-extrabold flex items-center gap-1">    
+                    <i class="fa-solid fa-fire text-bbq mr-1 rtl:ml-1 rtl:mr-0"></i>
+                    <span class="text-seoul">SEOUL</span>
+                    <span class="text-bbq">BBQ</span>
+                </a>
+                <button id="mobile-menu-close" class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-main">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <nav class="flex flex-col gap-2 flex-grow overflow-y-auto">
+                <div class="py-3 border-b border-brand">
+                    <button class="text-xl font-bold flex justify-between items-center w-full text-bbq" id="mobile-home-toggle">
+                        Home <i class="fa-solid fa-chevron-down text-sm transition-transform" id="home-icon"></i>
+                    </button>
+                    <div id="mobile-home-menu" class="hidden flex-col gap-2 mt-3 pl-4 rtl:pr-4 rtl:pl-0">
+                        <a href="index.html" class="text-bbq font-semibold py-1">Home 1</a>
+                        <a href="home2.html" class="text-muted hover:text-bbq py-1">Home 2</a>
+                    </div>
+                </div>
+                <a href="aboutus.html" class="text-xl font-bold py-3 border-b border-brand text-main">About Us</a>
+                <a href="services.html" class="text-xl font-bold py-3 border-b border-brand text-main">Services</a>
+                <a href="reservations.html" class="text-xl font-bold py-3 border-b border-brand text-main">Reservations</a>
+                <a href="contact.html" class="text-xl font-bold py-3 border-b border-brand text-main">Contact</a>
+                
+                <div class="py-3 border-b border-brand">
+                    <button class="text-xl font-bold flex justify-between items-center w-full text-main" id="mobile-dashboard-toggle">
+                        Dashboard <i class="fa-solid fa-chevron-down text-sm transition-transform" id="dashboard-icon"></i>
+                    </button>
+                    <div id="mobile-dashboard-menu" class="hidden flex-col gap-2 mt-3 pl-4 rtl:pr-4 rtl:pl-0">
+                        <a href="admin.html" class="text-muted hover:text-bbq py-1">Admin Portal</a>
+                        <a href="guestdash.html" class="text-muted hover:text-bbq py-1">Guest Portal</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="pt-6 mt-auto">
+                <div class="flex justify-center items-center gap-6 mb-4">
+                    <button id="mobile-rtl-toggle" class="flex items-center gap-2 text-sm font-bold text-muted hover:text-main">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
+                        <span>RTL</span>
+                    </button>
+                    <button id="mobile-theme-toggle" class="flex items-center gap-2 text-sm font-bold text-muted hover:text-main">
+                        <svg class="w-5 h-5 light-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg class="w-5 h-5 dark-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        <span>Theme</span>
+                    </button>
+                </div>
+                
+                <a href="reservations.html" class="btn-primary w-full py-4 rounded-xl font-bold flex justify-center items-center">Book a Table</a>
+                <div class="flex justify-center gap-4 mt-6">
+                    <a href="login.html" class="text-sm font-bold text-muted hover:text-main">Log in</a>
+                    <span class="text-muted">•</span>
+                    <a href="signup.html" class="text-sm font-bold text-muted hover:text-main">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+
+            // Mobile Drawer
+            const menuDrawer = document.getElementById('mobile-menu-drawer');
+            const menuContent = document.getElementById('drawer-content');
+            const menuBackdrop = document.getElementById('drawer-backdrop');
+
+            const openDrawer = () => {
+                menuDrawer.classList.remove('pointer-events-none');
+                menuContent.classList.remove('translate-x-full', 'rtl:-translate-x-full');
+                menuBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+                menuBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'hidden';
+            };
+            const closeDrawer = () => {
+                if(html.getAttribute('dir') === 'rtl') {
+                    menuContent.classList.add('rtl:-translate-x-full');
+                } else {
+                    menuContent.classList.add('translate-x-full');
+                }
+                menuBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
+                menuBackdrop.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => { 
+                    menuDrawer.classList.add('pointer-events-none'); 
+                    document.body.style.overflow = ''; 
+                }, 300);
+            };
+
+            document.getElementById('mobile-menu-open')?.addEventListener('click', openDrawer);
+            document.getElementById('mobile-menu-close')?.addEventListener('click', closeDrawer);
+            menuBackdrop?.addEventListener('click', closeDrawer);
+
+            // Mobile Accordion (Home & Dashboard)
+            const homeToggle = document.getElementById('mobile-home-toggle');
+            const homeMenu = document.getElementById('mobile-home-menu');
+            const homeIcon = document.getElementById('home-icon');
+
+            homeToggle?.addEventListener('click', () => {
+                homeMenu.classList.toggle('hidden');
+                homeMenu.classList.toggle('flex');
+                homeIcon.classList.toggle('rotate-180');
+            });
+
+            const dashToggle = document.getElementById('mobile-dashboard-toggle');
+            const dashMenu = document.getElementById('mobile-dashboard-menu');
+            const dashIcon = document.getElementById('dashboard-icon');
+
+            dashToggle?.addEventListener('click', () => {
+                dashMenu.classList.toggle('hidden');
+                dashMenu.classList.toggle('flex');
+                dashIcon.classList.toggle('rotate-180');
+            });
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+            const applyTheme = (theme) => {
+                html.setAttribute('data-theme', theme);
+                document.querySelectorAll('.light-icon').forEach(i => i.classList.toggle('hidden', theme === 'dark'));
+                document.querySelectorAll('.dark-icon').forEach(i => i.classList.toggle('hidden', theme === 'light'));
+            };
+            const toggleTheme = () => {
+                const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                localStorage.setItem('theme', next);
+                applyTheme(next);
+            };
+            themeToggle?.addEventListener('click', toggleTheme);
+            mobileThemeToggle?.addEventListener('click', toggleTheme);
+            applyTheme(localStorage.getItem('theme') || 'light');
+
+            // RTL Toggle Logic
+            const rtlToggle = document.getElementById('rtl-toggle');
+            const mobileRtlToggle = document.getElementById('mobile-rtl-toggle');
+
+            const toggleRTL = () => {
+                const currentDir = html.getAttribute('dir');
+                const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
+                
+                html.setAttribute('dir', newDir);
+                localStorage.setItem('language', newDir === 'rtl' ? 'ar' : 'en');
+
+                if(menuDrawer.classList.contains('pointer-events-none')) {
+                    if (newDir === 'rtl') {
+                        menuContent.classList.add('rtl:-translate-x-full');
+                        menuContent.classList.remove('translate-x-full');
+                    } else {
+                        menuContent.classList.add('translate-x-full');
+                        menuContent.classList.remove('rtl:-translate-x-full');
+                    }
+                }
+            };
+
+            rtlToggle?.addEventListener('click', toggleRTL);
+            mobileRtlToggle?.addEventListener('click', toggleRTL);
+
+            // Initialize Direction
+            const savedLang = localStorage.getItem('language');
+            html.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+        });
+    </script>
+</body>
+</html>
